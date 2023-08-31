@@ -8,7 +8,7 @@ router.route('/').get((req, res) => {
     const userId = req.query.user;
     console.log(userId)
     if (userId){
-        Ticket.find({author: userId})
+        Ticket.find({author: { $regex: new RegExp("^" + userId.toLowerCase(), "i") }})
         .then(tickets => res.json(tickets))
         .catch(err => res.status(400).json('Error: ' + err));
     }
